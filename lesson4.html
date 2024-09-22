@@ -1,0 +1,98 @@
+use test
+
+db.users.find()
+
+db.users.insertOne({carModel: 'BMW', year:200})
+
+db.users.find({_id:ObjectId('66f01825f0259c4a8f75c273')})
+
+db.users.find({age:16})
+db.users.find(
+{gender:'female', rating:4},
+// {_id:1, name:1}
+{name:0}
+)
+
+db.users.find({
+$and:[
+{rating:2},
+{gender:'female'}
+]
+})
+
+db.users.find({
+$or:[
+{rating:2},
+{gender:'female'}
+]
+})
+
+db.users.find({
+age:{
+$in:[12,25,33,48,16,18]
+}
+})
+db.users.find({
+age:{
+$nin:[12,25,33,48,16,18]
+}
+})
+
+db.users.find({
+rating:{$gt:2} //great than >
+})
+db.users.find({
+rating:{$gte:2} //great than equall >=
+})
+db.users.find({
+rating:{$lt:2} //less than >
+})
+db.users.find({
+rating:{$lte:2} //less than equall <=
+})
+db.users.find({
+rating:{$eq:2} //equall =
+})
+//або
+db.users.find({rating:3})
+
+db.users.find({name:'Kira'})
+
+db.users.find({name:/^a/i}) //начало строки і-регістр не має значення
+db.users.find({name:/a$/i})//конец строки
+db.users.find({name:/.{2}t/i}) //.-будь-який символ{скільки таких символів має бути}третя літера t
+db.users.find({name:/^k.*a$/i}) //слово починається на к, .* - будь-яка кількість симв., і закінчується на літ. а
+db.users.find({name:/v/i}) // дe є літера v
+
+db.users.find().sort({rating:1})
+db.users.find().sort({rating:-1})
+db.users.find().sort({rating:-1, name:-1}).limit(2).skip(2)
+
+db.users.updateOne(
+{_id:ObjectId('66f01825f0259c4a8f75c273')},
+{$set:{rating2:8}}
+)
+db.users.updateOne(
+{_id:ObjectId('66f01825f0259c4a8f75c273')},
+{$unset:{rating2:1}}
+)
+db.users.updateMany(
+{gender:'male'},
+{$set:{gender:'animal'}}
+)
+db.users.find({"address.house":{$gt:20}})
+db.users.find({parents:'Masha'})
+
+db.users.find({parents:{$size:1}})
+db.users.find({parents:{$exists:1}})
+
+db.users.find({_id:ObjectId('66f01825f0259c4a8f75c273')})
+db.users.updateOne(
+{_id:ObjectId('66f01825f0259c4a8f75c273')},
+{$push:{parents:'Mike'}}
+)
+
+db.users.deleteOne(
+{_id:ObjectId('66f01825f0259c4a8f75c273')}
+)
+
