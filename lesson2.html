@@ -1,0 +1,67 @@
+use xena;
+select distinct name, age from users;
+
+select avg(age), sum(age) from users;
+
+select avg(age) from users
+union
+select sum(age) from users;
+
+select id, price, price*2 as doublePrice from cars;
+
+select concat('My name is ',name,' I`m ',age,' gender - ',gender) from users;
+select concat('My name is ',name,' I`m ',age,' gender - ',gender) as strings from users; #щоб віддати на фронт
+
+select * from users where name > 'max';
+select * from users where name < 'max';
+
+select * from users where age = id+17;
+
+select lower(name) from users;
+select upper(name) from users;
+
+select * from application
+join client on client.idClient = application.Client_idClient
+where FirstName='Roman';
+
+select client.* from application
+join client on client.idClient = application.Client_idClient
+where FirstName='Roman';
+
+select application.* from application
+join client on client.idClient = application.Client_idClient
+where FirstName='Roman';
+
+select client.*, application.CreditState from application
+join client on client.idClient = application.Client_idClient
+where FirstName='Roman';
+
+select * from client
+join xena.application a on client.idClient = a.Client_idClient
+join xena.department d on d.idDepartment = client.Department_idDepartment;
+
+select a.*,client.FirstName, d.DepartmentCity from client
+join xena.application a on client.idClient = a.Client_idClient
+join xena.department d on d.idDepartment = client.Department_idDepartment;
+
+create table cities(
+id int primary key auto_increment,
+city varchar(20) not null
+);
+
+create table users2(
+id int primary key auto_increment,
+name varchar(20) not null,
+age int not null,
+city_id int null,
+foreign key(city_id) references cities(id)
+);
+
+select users2.*, c.city from users2
+join cities c on c.id = users2.city_id
+where city='lviv';
+
+select * from users2 join cities c on c.id = users2.city_id;
+
+select * from users2 left join cities c on c.id = users2.city_id;
+select * from users2 right join cities c on c.id = users2.city_id;
